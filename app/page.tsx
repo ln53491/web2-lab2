@@ -118,7 +118,7 @@ export default function Home() {
                         }}
                     />
                 </div>
-                <input className="prompt" type="text" id="lname" name="lastname" autofocus="true"/>
+                <input className="prompt" type="text" id="lname" name="lastname" autoFocus="true"/>
             </div>
         </div>
     </div>
