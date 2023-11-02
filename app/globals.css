@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 @font-face {
   font-family: 'ModeSeven';
   src: url('/fonts/modeseven.ttf') format('embedded-opentype'),
@@ -73,14 +77,16 @@ body {
   animation: glow 2s ease infinite alternate;
   padding: 20px;
   z-index: 1;
+  overflow-y: scroll;
+  word-wrap: break-word;
 }
 
 @keyframes glow {
   from {
-    box-shadow: 0 0 50px 10px rgba(255, 230, 100, 0.3);
+    box-shadow: 0 0 100px 10px rgba(255, 230, 100, 0.3);
   }
   to {
-    box-shadow: 0 0 50px 5px rgba(255, 66, 206, 0.3);
+    box-shadow: 0 0 100px 5px rgba(255, 66, 206, 0.3);
   }
 }
 

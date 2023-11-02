@@ -1,9 +1,8 @@
 'use client'
 import React from "react";
 import Typewriter from "typewriter-effect";
-import Prompt from "@/app/prompt";
 
-export default function CustomPrompt(props: {
+export default function TextPrompt(props: {
     text: string[]
 }) {
     return (
@@ -19,7 +18,7 @@ export default function CustomPrompt(props: {
                         }}
                         onInit={(typewriter) => {
                             typewriter
-                                .pauseFor(250)
+                                .pauseFor(100)
                                 .typeString(line)
                                 .pauseFor(1000)
                                 .stop()

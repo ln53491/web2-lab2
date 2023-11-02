@@ -14,12 +14,17 @@ export default function Header() {
                 onInit={(typewriter) => {
                     typewriter
                         .typeString('Welcome to the security attack simulator!')
-                        .pauseFor(1000)
+                        .pauseFor(2500)
+                        .changeDelay(20)
+                        .deleteAll()
+                        .changeDelay(30)
+                        .typeString('SQL Injection and Cross-Site Request Forgery')
+                        .pauseFor(2500)
                         .changeDelay(20)
                         .deleteAll()
                         .changeDelay(30)
                         .typeString('Created by Luka Nestic')
-                        .pauseFor(5000)
+                        .pauseFor(2500)
                         .start()
                 }}
             />

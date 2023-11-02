@@ -2,27 +2,59 @@
 import Header from "@/app/header";
 import Prompt from "@/app/prompt";
 import React, {useEffect, useState} from "react";
-import CustomPrompt from "@/app/custom-prompt";
 import {responses} from "@/app/responses";
 
 export default function TerminalBox() {
 
-    const [promptsIds, setPromptsIds] = useState<number[]>([0]);
+    const [prompts, setPrompts] = useState<string[]>([""]);
+    const [isProcess, setIsProcess] = useState<boolean>(false)
+
     const handleEnterPrompt = (value: string): void => {
-        switch(value.toLowerCase()) {
+        switch(value.toLowerCase().trim()) {
+            case "start sqli":
+                setPrompts(prompts => [...prompts, "sqli_info"]);
+                // setPrompts(prompts => prompts.length === 0 ? [""] : [...prompts, ""]);
+                break;
+            case "enable sqli":
+                responses["status"][0] = "SQLi = ENABLED"
+                setPrompts(prompts => [...prompts, "sql_enable"]);
+                setPrompts(prompts => prompts.length === 0 ? [""] : [...prompts, ""]);
+                break;
+            case "enable csrf":
+                responses["status"][1] = "CSRF = ENABLED"
+                setPrompts(prompts => [...prompts, "csrf_enable"]);
+                setPrompts(prompts => prompts.length === 0 ? [""] : [...prompts, ""]);
+                break;
+            case "disable sqli":
+                responses["status"][0] = "SQLi = DISABLED"
+                setPrompts(prompts => [...prompts, "sql_disable"]);
+                setPrompts(prompts => prompts.length === 0 ? [""] : [...prompts, ""]);
+                break;
+            case "disable csrf":
+                responses["status"][1] = "CSRF = DISABLED"
+                setPrompts(prompts =>[...prompts, "csrf_disable"]);
+                setPrompts(prompts => prompts.length === 0 ? [""] : [...prompts, ""]);
+                break;
             case "clear":
-                setPromptsIds([] as number[])
+                setPrompts([] as string[])
                 break;
             case "help":
-
+                setPrompts(prompts => [...prompts, "help"]);
+                setPrompts(prompts => prompts.length === 0 ? [""] : [...prompts, ""]);
+                break;
+            case "status":
+                setPrompts(prompts => [...prompts, "status"]);
+                setPrompts(prompts => prompts.length === 0 ? [""] : [...prompts, ""]);
+                break;
             default:
-                setPromptsIds(prompts => prompts.length === 0 ? [0] : [...prompts, prompts[prompts.length - 1] + 1]);
+                if (value.trim() != "") setPrompts(prompts => [...prompts, "error"]);
+                setPrompts(prompts => prompts.length === 0 ? [""] : [...prompts, ""]);
                 break;
         }
     };
 
     useEffect((): void => {
-        if (promptsIds.length === 0) {
+        if (prompts.length === 0) {
             handleEnterPrompt("")
         }
     });
@@ -30,14 +62,16 @@ export default function TerminalBox() {
     return (
         <div className="hidden-div">
             <Header/>
-            {promptsIds.map(promptId => (
+            {prompts.map((promptValue, index) => (
                 <Prompt
-                    isDisabled={promptId != promptsIds[promptsIds.length - 1]}
-                    initialDelay={promptsIds[promptsIds.length - 1] ? 150 : 500}
+                    isDisabled={promptValue != prompts[prompts.length - 1]}
+                    initialDelay={(index == (prompts.length - 1)) ? 150 : 500}
                     onKeyPress={handleEnterPrompt}
+                    isTextOnly={promptValue != ""}
+                    value={promptValue}
+                    showEffect={true}
                 />
             ))}
-            {/*<CustomPrompt text={responses["help"]}/>*/}
         </div>
     )
 }
