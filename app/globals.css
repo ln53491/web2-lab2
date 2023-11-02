@@ -33,7 +33,7 @@ body {
 }
 
 .main-div {
-  width: calc(100vw - 40vh);
+  width: calc(100vw - 60vh);
   height: calc(100vh - 20vh);
   position: absolute;
   border-radius: 10px;
@@ -70,7 +70,7 @@ body {
   box-shadow: 0 0 100px blue;
   border-radius: 10px;
   border: 2px solid transparent;
-  animation: glow 5s ease infinite alternate;
+  animation: glow 2s ease infinite alternate;
   padding: 20px;
   z-index: 1;
 }
@@ -87,8 +87,7 @@ body {
 .root-div {
   height: 100%;
   display: flex;
-  padding: 10vh 20vh;
-
+  padding: 10vh 30vh;
 }
 
 .type-user {
@@ -109,6 +108,11 @@ body {
   width: 100%;
 }
 
+.row-div-effect {
+  display: flex;
+  flex-direction: row;
+}
+
 .user-info {
   color: rgb(81, 206, 224);
 }
@@ -123,4 +127,23 @@ body {
 
 .help-info {
   color: rgb(119, 115, 109);
+}
+
+.submit {
+  z-index: 10;
+  color: white;
+  background-color: white;
+}
+
+.shifted-div {
+  padding-left: 40px;
+}
+
+@media only screen and (max-width: 1000px) {
+  .root-div {
+    padding: 10vh 5vh;
+  }
+  .main-div {
+    width: calc(100vw - 5vh);
+  }
 }
