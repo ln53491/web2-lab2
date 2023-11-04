@@ -22,7 +22,7 @@ export default function Prompt(props: {
                 </div> :
                 <div className="row-div">
                     {props.showEffect ? <PromptEffect initialDelay={props.initialDelay}/> : <></>}
-                    <input className="prompt" type="text" id="lname" name="lastname"
+                    <input className="prompt" type="text"
                            autoFocus={!props.isDisabled}
                            disabled={props.isDisabled}
                            onKeyDown={event => {

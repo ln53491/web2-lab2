@@ -3,17 +3,24 @@ import Header from "@/app/header";
 import Prompt from "@/app/prompt";
 import React, {useEffect, useState} from "react";
 import {responses} from "@/app/responses";
+import SqliPrompt from "@/app/sqli_prompt";
 
 export default function TerminalBox() {
 
     const [prompts, setPrompts] = useState<string[]>([""]);
     const [isProcess, setIsProcess] = useState<boolean>(false)
 
+    const addDefaultInput = (): void => {
+        setPrompts(prompts => [...prompts, ""]);
+    }
+
     const handleEnterPrompt = (value: string): void => {
         switch(value.toLowerCase().trim()) {
+            case "kill":
+                setPrompts(prompts => prompts.length === 0 ? [""] : [...prompts, ""]);
+                break;
             case "start sqli":
                 setPrompts(prompts => [...prompts, "sqli_info"]);
-                // setPrompts(prompts => prompts.length === 0 ? [""] : [...prompts, ""]);
                 break;
             case "enable sqli":
                 responses["status"][0] = "SQLi = ENABLED"
@@ -63,14 +70,17 @@ export default function TerminalBox() {
         <div className="hidden-div">
             <Header/>
             {prompts.map((promptValue, index) => (
-                <Prompt
-                    isDisabled={promptValue != prompts[prompts.length - 1]}
-                    initialDelay={(index == (prompts.length - 1)) ? 150 : 500}
-                    onKeyPress={handleEnterPrompt}
-                    isTextOnly={promptValue != ""}
-                    value={promptValue}
-                    showEffect={true}
-                />
+                promptValue == "sqli_info" ?
+                    <SqliPrompt key={index} killPrompt={addDefaultInput}/> :
+                    <Prompt
+                        key={index}
+                        isDisabled={promptValue != prompts[prompts.length - 1]}
+                        initialDelay={(index == (prompts.length - 1)) ? 150 : 500}
+                        onKeyPress={handleEnterPrompt}
+                        isTextOnly={promptValue != ""}
+                        value={promptValue}
+                        showEffect={true}
+                    />
             ))}
         </div>
     )

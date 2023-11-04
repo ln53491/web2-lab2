@@ -153,3 +153,7 @@ body {
     width: calc(100vw - 5vh);
   }
 }
+
+.divider {
+  width: 12px;
+}
