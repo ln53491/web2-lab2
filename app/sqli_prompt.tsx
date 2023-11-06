@@ -184,7 +184,7 @@ export default function SqliPrompt(props: {
 
             {currData.map((value, index) => (
                 typeof value === "number" ?
-                    <div className="row-div">
+                    <div key={index} className="row-div">
                         <div className="user-info">
                             <Typewriter
                                 options={{
@@ -220,7 +220,7 @@ export default function SqliPrompt(props: {
                         />
                     </div> :(
                         typeof value === "string" ?
-                            <div className="domain-info shifted-div">
+                            <div key={index} className="domain-info shifted-div">
                                 <Typewriter
                                     options={{
                                         autoStart: true,
@@ -237,7 +237,7 @@ export default function SqliPrompt(props: {
                                     }}
                                 />
                             </div> :
-                    <div className="shifted-div">
+                    <div key={index} className="shifted-div">
                         <div>
                             <Typewriter
                                 options={{
@@ -258,6 +258,7 @@ export default function SqliPrompt(props: {
                         <div className="cursor">
                             {value.map((person: string) => (
                                 <Typewriter
+                                    key={index}
                                     options={{
                                         autoStart: true,
                                         loop: false,
