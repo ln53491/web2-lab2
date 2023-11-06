@@ -147,7 +147,7 @@ body {
 
 @media only screen and (max-width: 1000px) {
   .root-div {
-    padding: 10vh 5vh;
+    padding: 10vh 2.5vh;
   }
   .main-div {
     width: calc(100vw - 5vh);

@@ -2,13 +2,11 @@
 import React, {useEffect, useRef, useState} from "react";
 import Typewriter from "typewriter-effect";
 import {responses} from "@/app/responses";
-import initDb, {getDbData} from "@/app/db";
-import {QueryResultRow} from "pg";
+import {getDbData} from "@/db/db";
 
 export default function SqliPrompt(props: {
     killPrompt: CallableFunction,
 }) {
-    var isDb: boolean = false;
     const [isInput, setIsInput] = useState<boolean>(false);
     const [delay, setDelay] = useState<boolean>(false);
     const [query, setQuery] = useState<string>("");
@@ -16,32 +14,22 @@ export default function SqliPrompt(props: {
     const inputRef = useRef(null);
 
     useEffect(() => {
-        async function getDbClient() {
-            isDb = true;
-            await initDb();
-        }
-        if (!isDb) {
-            getDbClient();
-        }
-    }, []);
-
-    useEffect(() => {
         async function getData() {
             setQuery("");
             const rows = await getDbData(query);
             console.log(rows)
-            if (typeof rows === "string") {
-                setCurrData(prompts => [...prompts, rows, prompts[prompts.length - 1]+1])
-            } else {
-                const personRows: string[] = []
-                rows.map(row => {
-                    personRows.push(JSON.stringify(row));
-                })
-                setCurrData(prompts => [...prompts, personRows, prompts[prompts.length - 1]+1])
-            }
+            // if (typeof rows === "string") {
+            //     setCurrData(prompts => [...prompts, rows, prompts[prompts.length - 1]+1])
+            // } else {
+            //     const personRows: string[] = []
+            //     rows.map(row => {
+            //         personRows.push(JSON.stringify(row));
+            //     })
+            //     setCurrData(prompts => [...prompts, personRows, prompts[prompts.length - 1]+1])
+            // }
         }
         if (query != "") {
-            getData()
+            getData();
         }
     }, [query]);
 
