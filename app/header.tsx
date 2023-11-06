@@ -10,6 +10,7 @@ export default function Header() {
                     autoStart: true,
                     loop: true,
                     delay: 30,
+                    wrapperClassName: "color-white"
                 }}
                 onInit={(typewriter) => {
                     typewriter
@@ -51,7 +52,8 @@ export default function Header() {
                             autoStart: true,
                             loop: false,
                             delay: 1,
-                            cursor: ""
+                            cursor: "",
+                            wrapperClassName: "color-white"
                         }}
                         onInit={(typewriter) => {
                             typewriter

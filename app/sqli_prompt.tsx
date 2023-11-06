@@ -51,7 +51,8 @@ export default function SqliPrompt(props: {
                         autoStart: true,
                         loop: false,
                         delay: 1,
-                        cursor: ""
+                        cursor: "",
+                        wrapperClassName: "color-white"
                     }}
                     onInit={(typewriter) => {
                         typewriter
@@ -66,7 +67,8 @@ export default function SqliPrompt(props: {
                         autoStart: true,
                         loop: false,
                         delay: 1,
-                        cursor: ""
+                        cursor: "",
+                        wrapperClassName: "color-white"
                     }}
                     onInit={(typewriter) => {
                         typewriter
@@ -81,7 +83,8 @@ export default function SqliPrompt(props: {
                         autoStart: true,
                         loop: false,
                         delay: 1,
-                        cursor: ""
+                        cursor: "",
+                        wrapperClassName: "color-white"
                     }}
                     onInit={(typewriter) => {
                         typewriter
@@ -97,7 +100,8 @@ export default function SqliPrompt(props: {
                         autoStart: true,
                         loop: false,
                         delay: 1,
-                        cursor: ""
+                        cursor: "",
+                        wrapperClassName: "color-white"
                     }}
                     onInit={(typewriter) => {
                         typewriter
@@ -152,7 +156,8 @@ export default function SqliPrompt(props: {
                         autoStart: true,
                         loop: false,
                         delay: 1,
-                        cursor: ""
+                        cursor: "",
+                        wrapperClassName: "color-white"
                     }}
                     onInit={(typewriter) => {
                         typewriter
@@ -167,7 +172,8 @@ export default function SqliPrompt(props: {
                         autoStart: true,
                         loop: false,
                         delay: 1,
-                        cursor: ""
+                        cursor: "",
+                        wrapperClassName: "color-white"
                     }}
                     onInit={(typewriter) => {
                         typewriter

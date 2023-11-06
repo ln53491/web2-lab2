@@ -141,6 +141,10 @@ body {
   background-color: white;
 }
 
+.color-white {
+  color: white;
+}
+
 .shifted-div {
   padding-left: 40px;
 }

@@ -8,14 +8,15 @@ export default function TextPrompt(props: {
     return (
         <div className="type-user">
             <div className="shifted-div">
-                {props.text.map((line,index) => (
+                {props.text.map((line, index) => (
                     <Typewriter
                         key={index}
                         options={{
                             autoStart: true,
                             loop: false,
                             delay: 1,
-                            cursor: ""
+                            cursor: "",
+                            wrapperClassName: "color-white"
                         }}
                         onInit={(typewriter) => {
                             typewriter
