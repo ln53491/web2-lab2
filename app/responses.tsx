@@ -47,9 +47,9 @@ export const responses = {
         "For demonstration purposes, please create a user for this simulation.",
         "Successfully logged in!",
         "------------",
-        "Now here are some ",
-        "cute cat pictures",
-        "!",
+        "Now here are some cute cat pictures:",
+        "https://web2-cute-cats.vercel.app",
+        " :D",
         "At any given moment, you can check your session status with:",
         "'check session'"
     ]

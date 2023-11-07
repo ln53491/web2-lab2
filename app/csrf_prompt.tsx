@@ -202,7 +202,7 @@ export default function CsrfPrompt(props: {
                             }}
                         />
                         <div className="divider"></div>
-                        <a className="url-text" href={"https://www.google.com/"} target="_blank" rel="noopener noreferrer">
+                        <a className="url-text" href={"https://web2-cute-cats.vercel.app"} target="_blank" rel="noopener noreferrer">
                             <Typewriter
                                 options={{
                                     autoStart: true,
@@ -212,29 +212,13 @@ export default function CsrfPrompt(props: {
                                 }}
                                 onInit={(typewriter) => {
                                     typewriter
-                                        .pauseFor(500 + 1000 + 350)
+                                        .pauseFor(500 + 1000 + 750)
                                         .typeString(responses.csrf_info[7])
                                         .stop()
                                         .start()
                                 }}
                             />
                         </a>
-                        <Typewriter
-                            options={{
-                                autoStart: true,
-                                loop: false,
-                                delay: 1,
-                                cursor: "",
-                                wrapperClassName: "color-white"
-                            }}
-                            onInit={(typewriter) => {
-                                typewriter
-                                    .pauseFor(500 + 1000 + 500)
-                                    .typeString(responses.csrf_info[8])
-                                    .stop()
-                                    .start()
-                            }}
-                        />
                     </div>
                     <Typewriter
                         options={{
@@ -246,7 +230,7 @@ export default function CsrfPrompt(props: {
                         }}
                         onInit={(typewriter) => {
                             typewriter
-                                .pauseFor(500 + 1000 + 500 + 250 + 500)
+                                .pauseFor(500 + 1000 + 750 + 250 + 500)
                                 .typeString(responses.csrf_info[9])
                                 .stop()
                                 .start()
@@ -262,7 +246,7 @@ export default function CsrfPrompt(props: {
                             }}
                             onInit={(typewriter) => {
                                 typewriter
-                                    .pauseFor(500 + 1000 + 500 + 250 + 1200 + 500)
+                                    .pauseFor(500 + 1000 + 750 + 250 + 1200 + 500)
                                     .callFunction(() => {
                                         initInputSession()
                                     })
