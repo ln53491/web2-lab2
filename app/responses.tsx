@@ -1,6 +1,6 @@
 export const csrfSecretToken = "jh45DJlHOPwhuc786b368rmsdfu8ujfsDJ"
 
-export const responses = {
+export let responses = {
     "help": [
         "List of all the available commands:",
         "---------",
