@@ -10,7 +10,7 @@ export default function Logout() {
     const [logout, setLogout] = useState<boolean | undefined>(undefined);
 
     useEffect(() => {
-        if (params["token"] == csrfSecretToken || responses.status[1] == "CSRF = DISABLED") {
+        if (params["token"] === csrfSecretToken || responses["status"][1] === "CSRF = ENABLED") {
             setLogout(true);
             removeCookie("user", {path:'/'});
         } else {
