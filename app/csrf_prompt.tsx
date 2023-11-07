@@ -306,7 +306,7 @@ export default function CsrfPrompt(props: {
                             onInit={(typewriter) => {
                                 typewriter
                                     .pauseFor(250)
-                                    .typeString(cookie.user ? "ACTIVE = true" : "ACTIVE = false")
+                                    .typeString(cookie.user ? "LOGGED_IN = true" : "LOGGED_IN = false")
                                     .stop()
                                     .start()
                             }}

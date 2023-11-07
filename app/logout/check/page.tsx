@@ -2,15 +2,15 @@
 import React, {useEffect, useState} from "react";
 import {useCookies} from "react-cookie"
 import {csrfSecretToken} from "@/app/responses";
-import {useParams} from "next/navigation";
+import {useSearchParams} from "next/navigation";
 
 export default function Logout() {
-    const params = useParams();
+    const params = useSearchParams()
     const [cookie, setCookie, removeCookie] = useCookies(["user"]);
     const [logout, setLogout] = useState<boolean | undefined>(undefined);
 
     useEffect(() => {
-        if (params["token"] == csrfSecretToken || localStorage.getItem("csrf") == "enabled") {
+        if (params.get("token") == csrfSecretToken || localStorage.getItem("csrf") == "enabled") {
             setLogout(true);
             removeCookie("user", {path:'/'});
         } else {
