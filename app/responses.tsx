@@ -1,6 +1,6 @@
 export const csrfSecretToken = "jh45DJlHOPwhuc786b368rmsdfu8ujfsDJ"
 
-export let responses = {
+export const responses = {
     "help": [
         "List of all the available commands:",
         "---------",
@@ -11,10 +11,6 @@ export let responses = {
         "'kill' - stops the current simulation",
         "'status' - shows status of both vulnerabilities",
         "'clear' - clears the terminal",
-    ],
-    "status": [
-        "SQLi = DISABLED",
-        "CSRF = DISABLED"
     ],
     "error": [
         "Wrong command, please seek 'help'."

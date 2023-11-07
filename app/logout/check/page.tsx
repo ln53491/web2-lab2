@@ -1,17 +1,16 @@
 'use client'
 import React, {useEffect, useState} from "react";
 import {useCookies} from "react-cookie"
-import {csrfSecretToken, responses} from "@/app/responses";
+import {csrfSecretToken} from "@/app/responses";
 import {useParams} from "next/navigation";
 
 export default function Logout() {
     const params = useParams();
     const [cookie, setCookie, removeCookie] = useCookies(["user"]);
     const [logout, setLogout] = useState<boolean | undefined>(undefined);
-    console.log(responses["status"][1])
 
     useEffect(() => {
-        if (params["token"] === csrfSecretToken || responses["status"][1] === "CSRF = ENABLED") {
+        if (params["token"] == csrfSecretToken || localStorage.getItem("csrf") == "ENABLED") {
             setLogout(true);
             removeCookie("user", {path:'/'});
         } else {

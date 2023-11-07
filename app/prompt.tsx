@@ -17,7 +17,7 @@ export default function Prompt(props: {
             {props.isTextOnly ?
                 <div className="row-div">
                     {// @ts-ignore
-                    <TextPrompt text={responses[props.value]}/>
+                    <TextPrompt text={[`SQLi = ${localStorage.getItem("sqli").toUpperCase()}`, `CSRF = ${localStorage.getItem("csrf").toUpperCase()}`]}/>
                     }
                 </div> :
                 <div className="row-div">

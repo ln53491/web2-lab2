@@ -2,7 +2,6 @@
 import Header from "@/app/header";
 import Prompt from "@/app/prompt";
 import React, {useEffect, useState} from "react";
-import {responses} from "@/app/responses";
 import SqliPrompt from "@/app/sqli_prompt";
 import CsrfPrompt from "@/app/csrf_prompt";
 
@@ -14,6 +13,11 @@ export default function TerminalBox() {
     const addDefaultInput = (): void => {
         setPrompts(prompts => [...prompts, ""]);
     }
+
+    useEffect(() => {
+        localStorage.setItem("csrf", "enabled")
+        localStorage.setItem("sqli", "enabled")
+    }, []);
 
     const handleEnterPrompt = (value: string): void => {
         switch(value.toLowerCase().trim()) {
@@ -27,22 +31,22 @@ export default function TerminalBox() {
                 setPrompts(prompts => [...prompts, "csrf_info"]);
                 break;
             case "enable sqli":
-                responses["status"][0] = "SQLi = ENABLED"
+                localStorage.setItem("sqli", "enabled")
                 setPrompts(prompts => [...prompts, "sql_enable"]);
                 setPrompts(prompts => prompts.length === 0 ? [""] : [...prompts, ""]);
                 break;
             case "enable csrf":
-                responses["status"][1] = "CSRF = ENABLED"
+                localStorage.setItem("csrf", "enabled")
                 setPrompts(prompts => [...prompts, "csrf_enable"]);
                 setPrompts(prompts => prompts.length === 0 ? [""] : [...prompts, ""]);
                 break;
             case "disable sqli":
-                responses["status"][0] = "SQLi = DISABLED"
+                localStorage.setItem("sqli", "disabled")
                 setPrompts(prompts => [...prompts, "sql_disable"]);
                 setPrompts(prompts => prompts.length === 0 ? [""] : [...prompts, ""]);
                 break;
             case "disable csrf":
-                responses["status"][1] = "CSRF = DISABLED"
+                localStorage.setItem("csrf", "disabled")
                 setPrompts(prompts =>[...prompts, "csrf_disable"]);
                 setPrompts(prompts => prompts.length === 0 ? [""] : [...prompts, ""]);
                 break;
