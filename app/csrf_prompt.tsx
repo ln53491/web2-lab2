@@ -3,6 +3,7 @@ import React, {useEffect, useRef, useState} from "react";
 import Typewriter from "typewriter-effect";
 import {responses} from "@/app/responses";
 import {useCookies} from "react-cookie"
+import TextPrompt from "@/app/text-prompt";
 
 export default function CsrfPrompt(props: {
     killPrompt: CallableFunction,
@@ -19,17 +20,21 @@ export default function CsrfPrompt(props: {
     }, []);
 
     const onKeyPressUsername = (value: string): void => {
-        const currValue = value.toLowerCase().replaceAll(" ", "");
-        if (currValue == "kill") {
-            props.killPrompt();
-        } else {
-            if (currValue != "") {
-                setUsername(currValue);
-                setCookie("user", currValue, {
-                    path: "*",
-                    maxAge: 3600
-                })
-            }
+        const currValue = value.toLowerCase().trim();
+        switch(currValue) {
+            case "kill":
+                props.killPrompt();
+                break;
+            default:
+                const usernameValue = currValue.replaceAll(" ", "");
+                if (usernameValue != "") {
+                    setUsername(usernameValue);
+                    setCookie("user", usernameValue, {
+                        path: "*",
+                        maxAge: 3600
+                    })
+                }
+                break;
         }
     }
 
@@ -39,12 +44,25 @@ export default function CsrfPrompt(props: {
 
     const onKeyPressSession = (value: string): void => {
         const currValue = value.toLowerCase().trim();
-        if (currValue == "kill") {
-            props.killPrompt();
-            return
-        }
-        if (currValue == "check session") {
-            setCurrData(prompts => [...prompts, -prompts[prompts.length - 1], prompts[prompts.length - 1]+1])
+        switch(currValue) {
+            case "kill":
+                props.killPrompt();
+                break;
+            case "status":
+                setCurrData(prompts => [...prompts, -888888, prompts[prompts.length - 1]+1]);
+                break;
+            case "enable sqli":
+            case "enable csrf":
+            case "disable sqli":
+            case "disable csrf":
+            case "clear":
+                setCurrData(prompts => [...prompts, -444444, prompts[prompts.length - 1]+1]);
+                break;
+            case "check session":
+                setCurrData(prompts => [...prompts, -prompts[prompts.length - 1], prompts[prompts.length - 1]+1]);
+                break;
+            default:
+                break;
         }
     }
 
@@ -295,38 +313,64 @@ export default function CsrfPrompt(props: {
                                }}
                         />
                     </div> :
-                    <div key={value} className="cursor shifted-div">
-                        <Typewriter
-                            options={{
-                                autoStart: true,
-                                loop: false,
-                                delay: 1,
-                                cursor: ""
-                            }}
-                            onInit={(typewriter) => {
-                                typewriter
-                                    .pauseFor(250)
-                                    .typeString(cookie.user ? "LOGGED_IN = true" : "LOGGED_IN = false")
-                                    .stop()
-                                    .start()
-                            }}
-                        />
-                        <Typewriter
-                            options={{
-                                autoStart: true,
-                                loop: false,
-                                delay: 1,
-                                cursor: ""
-                            }}
-                            onInit={(typewriter) => {
-                                typewriter
-                                    .pauseFor(250)
-                                    .typeString( cookie.user ? "USERNAME = " + cookie.user : "USERNAME = undefined")
-                                    .stop()
-                                    .start()
-                            }}
-                        />
-                    </div>
+                    (
+                        value != -444444 && value != -888888 ?
+                            <div key={value} className="cursor shifted-div">
+                                <Typewriter
+                                    options={{
+                                        autoStart: true,
+                                        loop: false,
+                                        delay: 1,
+                                        cursor: ""
+                                    }}
+                                    onInit={(typewriter) => {
+                                        typewriter
+                                            .pauseFor(250)
+                                            .typeString(cookie.user ? "LOGGED_IN = true" : "LOGGED_IN = false")
+                                            .stop()
+                                            .start()
+                                    }}
+                                />
+                                <Typewriter
+                                    options={{
+                                        autoStart: true,
+                                        loop: false,
+                                        delay: 1,
+                                        cursor: ""
+                                    }}
+                                    onInit={(typewriter) => {
+                                        typewriter
+                                            .pauseFor(250)
+                                            .typeString( cookie.user ? "USERNAME = " + cookie.user : "USERNAME = undefined")
+                                            .stop()
+                                            .start()
+                                    }}
+                                />
+                            </div> :
+                            (value == -444444 ?
+                                <div key={value} className="shifted-div">
+                                    <Typewriter
+                                        options={{
+                                            autoStart: true,
+                                            loop: false,
+                                            delay: 1,
+                                            cursor: "",
+                                            wrapperClassName: "color-white"
+                                        }}
+                                        onInit={(typewriter) => {
+                                            typewriter
+                                                .pauseFor(250)
+                                                .typeString("This command is only available when simulation is not running. Use 'kill' to return to the main screen.")
+                                                .stop()
+                                                .start()
+                                        }}
+                                    />
+                                </div> :
+                                    //@ts-ignore
+                                <TextPrompt key={value} text={[`SQLi = ${localStorage.getItem("sqli").toUpperCase()}`, `CSRF = ${localStorage.getItem("csrf").toUpperCase()}`]}/>
+                            )
+
+                    )
             ))}
         </div>
     )

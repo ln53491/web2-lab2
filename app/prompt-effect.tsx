@@ -35,7 +35,7 @@ export default function PromptEffect(props: {
                     }}
                     onInit={(typewriter) => {
                         typewriter
-                            .pauseFor(props.initialDelay + 25)
+                            .pauseFor(props.initialDelay + 150)
                             .typeString('@web2-lab2: ')
                             .pauseFor(1000)
                             .stop()
@@ -53,7 +53,7 @@ export default function PromptEffect(props: {
                     }}
                     onInit={(typewriter) => {
                         typewriter
-                            .pauseFor(props.initialDelay + 35)
+                            .pauseFor(props.initialDelay + 150 + 70)
                             .typeString('$ ~')
                             .pauseFor(1000)
                             .stop()
