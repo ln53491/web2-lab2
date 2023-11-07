@@ -1,3 +1,5 @@
+export const csrfSecretToken = "jh45DJlHOPwhuc786b368rmsdfu8ujfsDJ"
+
 export const responses = {
     "help": [
         "List of all the available commands:",
@@ -37,6 +39,19 @@ export const responses = {
         "SELECT * FROM Person WHERE ID = ",
         "'givenValue'",
         "and returns the result from our database."
+    ],
+    "csrf_info": [
+        "Cross-Site Request Forgery (CSRF) is an attack that forces authenticated users to submit a request to a web application against which they are currently authenticated.",
+        "One of the simplest, yet common actions that the attacker can do is force a user to log out of the current session.",
+        "------------",
+        "For demonstration purposes, please create a user for this simulation.",
+        "Successfully logged in!",
+        "------------",
+        "Now here are some ",
+        "cute cat pictures",
+        "!",
+        "At any given moment, you can check your session status with:",
+        "'check session'"
     ]
 }
 

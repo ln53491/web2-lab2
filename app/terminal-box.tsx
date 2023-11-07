@@ -4,6 +4,7 @@ import Prompt from "@/app/prompt";
 import React, {useEffect, useState} from "react";
 import {responses} from "@/app/responses";
 import SqliPrompt from "@/app/sqli_prompt";
+import CsrfPrompt from "@/app/csrf_prompt";
 
 export default function TerminalBox() {
 
@@ -21,6 +22,9 @@ export default function TerminalBox() {
                 break;
             case "start sqli":
                 setPrompts(prompts => [...prompts, "sqli_info"]);
+                break;
+            case "start csrf":
+                setPrompts(prompts => [...prompts, "csrf_info"]);
                 break;
             case "enable sqli":
                 responses["status"][0] = "SQLi = ENABLED"
@@ -72,15 +76,18 @@ export default function TerminalBox() {
             {prompts.map((promptValue, index) => (
                 promptValue == "sqli_info" ?
                     <SqliPrompt key={index} killPrompt={addDefaultInput}/> :
-                    <Prompt
-                        key={index}
-                        isDisabled={promptValue != prompts[prompts.length - 1]}
-                        initialDelay={(index == (prompts.length - 1)) ? 150 : 500}
-                        onKeyPress={handleEnterPrompt}
-                        isTextOnly={promptValue != ""}
-                        value={promptValue}
-                        showEffect={true}
-                    />
+                    (promptValue == "csrf_info" ?
+                        <CsrfPrompt key={index} killPrompt={addDefaultInput}/> :
+                            <Prompt
+                                key={index}
+                                isDisabled={promptValue != prompts[prompts.length - 1]}
+                                initialDelay={(index == (prompts.length - 1)) ? 150 : 500}
+                                onKeyPress={handleEnterPrompt}
+                                isTextOnly={promptValue != ""}
+                                value={promptValue}
+                                showEffect={true}
+                            />
+                    )
             ))}
         </div>
     )

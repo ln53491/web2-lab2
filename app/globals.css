@@ -161,3 +161,18 @@ body {
 .divider {
   width: 12px;
 }
+
+.url-text {
+  color: rgb(255, 86, 226);
+  text-decoration: underline;
+}
+
+.text-logout {
+  font-family: "ModeSeven";
+  font-size: 40px;
+}
+
+.text-logout-2 {
+  font-family: "ModeSeven";
+  font-size: 20px;
+}

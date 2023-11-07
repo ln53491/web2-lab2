@@ -17,7 +17,6 @@ export default function SqliPrompt(props: {
         async function getData() {
             setQuery("");
             const rows = await getDbData(query);
-            console.log(rows)
             // if (typeof rows === "string") {
             //     setCurrData(prompts => [...prompts, rows, prompts[prompts.length - 1]+1])
             // } else {
@@ -39,7 +38,6 @@ export default function SqliPrompt(props: {
             props.killPrompt();
         } else {
             setQuery(value);
-            console.log(currData)
         }
     }
 
