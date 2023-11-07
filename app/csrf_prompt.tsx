@@ -14,6 +14,10 @@ export default function CsrfPrompt(props: {
     const inputRef = useRef(null);
     const [cookie, setCookie, removeCookie] = useCookies(["user"])
 
+    useEffect(() => {
+        removeCookie("user", {path:'/'});
+    }, []);
+
     const onKeyPressUsername = (value: string): void => {
         const currValue = value.toLowerCase().replaceAll(" ", "");
         if (currValue == "kill") {
