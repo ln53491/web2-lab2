@@ -29,12 +29,15 @@ export const responses = {
     ],
     "sqli_info": [
         "SQL injection (SQLi) is a web security vulnerability that allows an attacker to interfere with the queries that an application makes to its database.",
-        "One of the most common types of SQL injection is tautology in which SQL query consists of a condition that is always true, thus returning whatever we give it as a main query (eg. 47194’ OR 1=1).",
+        "One of the most common types of SQL injection is tautology in which SQL query consists of a condition that is always true, thus returning whatever we give it as a main query.",
         "------------",
         "You are presented with an input which executes query: ",
-        "SELECT * FROM Person WHERE ID = ",
+        "SELECT * FROM Person WHERE ID=",
         "'givenValue'",
-        "and returns the result from our database."
+        "(eg.",
+        "47194' OR '1'='1",
+        ")",
+        "and returns the result from the database."
     ],
     "csrf_info": [
         "Cross-Site Request Forgery (CSRF) is an attack that forces authenticated users to submit a request to a web application against which they are currently authenticated.",

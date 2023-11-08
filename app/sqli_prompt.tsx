@@ -1,8 +1,8 @@
 'use client'
 import React, {useEffect, useRef, useState} from "react";
 import Typewriter from "typewriter-effect";
-import {responses} from "@/app/responses";
-import {getDbData} from "@/db/db";
+import {dbErrMsg, responses} from "@/app/responses";
+import TextPrompt from "@/app/text-prompt";
 
 export default function SqliPrompt(props: {
     killPrompt: CallableFunction,
@@ -15,17 +15,23 @@ export default function SqliPrompt(props: {
 
     useEffect(() => {
         async function getData() {
+            const status = localStorage.getItem("sqli");
+            const res = await fetch(`/sqli/${status}?value=${query}`, {
+                method: 'GET',
+            });
+            const data = await res.json();
+            const rows: Object[] = data.message
+
             setQuery("");
-            const rows = await getDbData(query);
-            // if (typeof rows === "string") {
-            //     setCurrData(prompts => [...prompts, rows, prompts[prompts.length - 1]+1])
-            // } else {
-            //     const personRows: string[] = []
-            //     rows.map(row => {
-            //         personRows.push(JSON.stringify(row));
-            //     })
-            //     setCurrData(prompts => [...prompts, personRows, prompts[prompts.length - 1]+1])
-            // }
+            if (rows.length == 0) {
+                setCurrData(prompts => [...prompts, dbErrMsg, prompts[prompts.length - 1]+1])
+            } else {
+                const personRows: string[] = []
+                rows.map(row => {
+                    personRows.push(JSON.stringify(row));
+                })
+                setCurrData(prompts => [...prompts, personRows, prompts[prompts.length - 1]+1])
+            }
         }
         if (query != "") {
             getData();
@@ -34,10 +40,26 @@ export default function SqliPrompt(props: {
 
     const onKeyPress = (value: string): void => {
         const currValue = value.toLowerCase().trim();
-        if (currValue == "kill") {
-            props.killPrompt();
-        } else {
-            setQuery(value);
+        switch(currValue) {
+            case "kill":
+                props.killPrompt();
+                break;
+            case "status":
+                setCurrData(prompts => [...prompts, -888888, prompts[prompts.length - 1]+1]);
+                break;
+            case "enable sqli":
+            case "enable csrf":
+            case "disable sqli":
+            case "disable csrf":
+            case "clear":
+                setCurrData(prompts => [...prompts, -444444, prompts[prompts.length - 1]+1]);
+                break;
+            case "check session":
+                setCurrData(prompts => [...prompts, -prompts[prompts.length - 1], prompts[prompts.length - 1]+1]);
+                break;
+            default:
+                setQuery(value);
+                break;
         }
     }
 
@@ -129,7 +151,7 @@ export default function SqliPrompt(props: {
                             }}
                         />
                     </div>
-                    <div className="divider"></div>
+                    {/*<div className="divider"></div>*/}
                     <div className="user-info">
                         <Typewriter
                             options={{
@@ -147,6 +169,61 @@ export default function SqliPrompt(props: {
                             }}
                         />
                     </div>
+                    <div className="divider"></div>
+                    <div className="">
+                        <Typewriter
+                            options={{
+                                autoStart: true,
+                                loop: false,
+                                delay: 1,
+                                cursor: "",
+                                wrapperClassName: "color-white"
+                            }}
+                            onInit={(typewriter) => {
+                                typewriter
+                                    .pauseFor(2750 + 400 + 3000 + 1000 + 1000 + 500 + 200)
+                                    .typeString(responses.sqli_info[6])
+                                    .stop()
+                                    .start()
+                            }}
+                        />
+                    </div>
+                    <div className="divider"></div>
+                    <div className="user-info">
+                        <Typewriter
+                            options={{
+                                autoStart: true,
+                                loop: false,
+                                delay: 1,
+                                cursor: ""
+                            }}
+                            onInit={(typewriter) => {
+                                typewriter
+                                    .pauseFor(2750 + 400 + 3000 + 1000 + 1000 + 500 + 200 + 50)
+                                    .typeString(responses.sqli_info[7])
+                                    .stop()
+                                    .start()
+                            }}
+                        />
+                    </div>
+                    <div className="">
+                        <Typewriter
+                            options={{
+                                autoStart: true,
+                                loop: false,
+                                delay: 1,
+                                cursor: "",
+                                wrapperClassName: "color-white"
+                            }}
+                            onInit={(typewriter) => {
+                                typewriter
+                                    .pauseFor(2750 + 400 + 3000 + 1000 + 1000 + 500 + 200 + 50 + 100)
+                                    .typeString(responses.sqli_info[8])
+                                    .stop()
+                                    .start()
+                            }}
+                        />
+                    </div>
                 </div>
 
                 <Typewriter
@@ -159,8 +236,8 @@ export default function SqliPrompt(props: {
                     }}
                     onInit={(typewriter) => {
                         typewriter
-                            .pauseFor(2750 + 400 + 3000 + 1000 + 1000 + 500 + 150)
-                            .typeString(responses.sqli_info[6])
+                            .pauseFor(2750 + 400 + 3000 + 1000 + 1000 + 500 + 500 + 200 + 50 + 100)
+                            .typeString(responses.sqli_info[9])
                             .stop()
                             .start()
                     }}
@@ -175,7 +252,7 @@ export default function SqliPrompt(props: {
                     }}
                     onInit={(typewriter) => {
                         typewriter
-                            .pauseFor(2750 + 400 + 3000 + 1000 + 1000 + 500 + 150 + 750)
+                            .pauseFor(2750 + 400 + 3000 + 1000 + 1000 + 500 + 150 + 750 + 200 + 50 + 100)
                             .typeString(responses.sqli_info[2])
                             .stop()
                             .callFunction(() => {
@@ -188,41 +265,97 @@ export default function SqliPrompt(props: {
 
             {currData.map((value, index) => (
                 typeof value === "number" ?
-                    <div key={index} className="row-div">
-                        <div className="user-info">
+                    (value === -888888 ?
+                            //@ts-ignore
+                            <TextPrompt key={value} text={[`SQLi = ${localStorage.getItem("sqli").toUpperCase()}`, `CSRF = ${localStorage.getItem("csrf").toUpperCase()}`]}/> :
+                    (value === -444444 ?
+                        <div key={value} className="shifted-div">
                             <Typewriter
                                 options={{
                                     autoStart: true,
                                     loop: false,
                                     delay: 1,
-                                    cursor: ""
+                                    cursor: "",
+                                    wrapperClassName: "color-white"
                                 }}
                                 onInit={(typewriter) => {
                                     typewriter
-                                        .pauseFor(delay ? 1000 : 2750 + 400 + 3000 + 1000)
-                                        .typeString("Enter ID:")
+                                        .pauseFor(250)
+                                        .typeString("This command is only available when simulation is not running. Use 'kill' to return to the main screen.")
                                         .stop()
-                                        .callFunction(() => {
-                                            setIsInput(true)
-                                            // @ts-ignore
-                                            inputRef.current.focus()
-                                        })
                                         .start()
                                 }}
                             />
+                        </div> :
+                        <div>
+                        <div key={index} className="row-div">
+                            <div className="user-info">
+                                <Typewriter
+                                    options={{
+                                        autoStart: true,
+                                        loop: false,
+                                        delay: 1,
+                                        cursor: ""
+                                    }}
+                                    onInit={(typewriter) => {
+                                        typewriter
+                                            .pauseFor(delay ? 1000 : 2750 + 400 + 3000 + 1000 + 200 + 50 + 100)
+                                            .typeString("Enter value:")
+                                            .stop()
+                                            .callFunction(() => {
+                                                setIsInput(true)
+                                                // @ts-ignore
+                                                inputRef.current.focus()
+                                            })
+                                            .start()
+                                    }}
+                                />
+                            </div>
+                            <div className="divider"></div>
+                            <input className="prompt" ref={inputRef} type="text"
+                                   key={value}
+                                   autoFocus={isInput}
+                                   disabled={value != currData[currData.length - 1]}
+                                   onKeyDown={event => {
+                                       if (event.key === 'Enter') {
+                                           onKeyPress(event.currentTarget.value)
+                                       }
+                                   }}
+                            />
                         </div>
-                        <div className="divider"></div>
-                        <input className="prompt" ref={inputRef} type="text"
-                               key={value}
-                               autoFocus={isInput}
-                               disabled={value != currData[currData.length - 1]}
-                               onKeyDown={event => {
-                                   if (event.key === 'Enter') {
-                                       onKeyPress(event.currentTarget.value)
-                                   }
-                               }}
-                        />
-                    </div> :(
+                    {query != "" && index == currData.length-1 ?
+                        <div className="shifted-div">
+                            <Typewriter
+                                options={{
+                                    autoStart: true,
+                                    loop: true,
+                                    delay: 1,
+                                    cursor: "",
+                                    wrapperClassName: "color-white"
+                                }}
+                                onInit={(typewriter) => {
+                                    typewriter
+                                        .typeString("/")
+                                        .pauseFor(20)
+                                        .deleteAll()
+                                        .typeString("-")
+                                        .pauseFor(20)
+                                        .deleteAll()
+                                        .typeString("\\")
+                                        .pauseFor(20)
+                                        .deleteAll()
+                                        .typeString("|")
+                                        .pauseFor(20)
+                                        .deleteAll()
+                                        .start()
+                                }}
+                            />
+                            <br/>
+                        </div> : <></>}
+                            </div>
+                    )
+                    )
+                    :(
                         typeof value === "string" ?
                             <div key={index} className="domain-info shifted-div">
                                 <Typewriter
@@ -248,7 +381,8 @@ export default function SqliPrompt(props: {
                                     autoStart: true,
                                     loop: false,
                                     delay: 1,
-                                    cursor: ""
+                                    cursor: "",
+                                    wrapperClassName: "color-white"
                                 }}
                                 onInit={(typewriter) => {
                                     typewriter
